@@ -83,6 +83,8 @@ class Tm_Builder_Plugin {
 		add_filter( 'the_content', array( $this, 'add_builder_content_wrapper' ) );
 
 		add_filter( 'tm_builder_inner_content_class', array( $this, 'add_builder_inner_content_class' ) );
+
+		$this->updater();
 	}
 
 	/**
@@ -909,6 +911,23 @@ class Tm_Builder_Plugin {
 			unset( $this->options->config[ $option_key ] );
 			update_option( 'tm_builder_options', $this->options->config );
 		}
+	}
+
+	/**
+	 * Include and init updater.
+	 *
+	 * @since 1.3.1
+	 */
+	public function updater() {
+		require_once( TM_BUILDER_DIR . 'inc/class-cherry-update/class-cherry-plugin-update.php' );
+
+		$updater = new Cherry_Plugin_Update();
+		$updater->init( array(
+			'version'         => TM_BUILDER_VERSION,
+			'slug'            => 'power-builder-upd',
+			'repository_name' => 'power-builder-upd',
+			'product_name'    => 'templatemonster',
+		) );
 	}
 
 }
