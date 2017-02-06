@@ -421,10 +421,10 @@ class Tm_Builder_Module_Blog extends Tm_Builder_Module {
 		$cols = $this->get_cols();
 
 		$queries = array(
-			'desktop' => 'xl_up',
-			'laptop'  => 'lg',
-			'tablet'  => 'md',
-			'phone'   => 'sm_down',
+			'desktop' => 'min_width_1441',
+			'laptop'  => '992_1440',
+			'tablet'  => '768_980',
+			'phone'   => 'max_width_767',
 		);
 
 		foreach ( $cols as $device => $data ) {
@@ -451,17 +451,17 @@ class Tm_Builder_Module_Blog extends Tm_Builder_Module {
 	public function get_cols() {
 
 		$data_map = array(
-			'desktop' => 'columns',
-			'laptop'  => 'columns_laptop',
-			'tablet'  => 'columns_tablet',
 			'phone'   => 'columns_phone',
+			'tablet'  => 'columns_tablet',
+			'laptop'  => 'columns_laptop',
+			'desktop' => 'columns',
 		);
 
 		$namespace = array(
-			'desktop' => 'xl',
-			'laptop'  => 'lg',
-			'tablet'  => 'md',
 			'phone'   => 'sm',
+			'tablet'  => 'md',
+			'laptop'  => 'lg',
+			'desktop' => 'xl',
 		);
 
 		$result = array();
@@ -475,7 +475,7 @@ class Tm_Builder_Module_Blog extends Tm_Builder_Module {
 
 			$result[ $device ] = array(
 				'cols'      => $col,
-				'class'     => sprintf( 'col-%2$s-%1$s', round( 12/$col ), $namespace[ $device ] ),
+				'class'     => sprintf( 'col-%2$s-%1$s', round( 12 / $col ), $namespace[ $device ] ),
 			);
 
 		}
