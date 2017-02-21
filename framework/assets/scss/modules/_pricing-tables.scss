@@ -11,6 +11,7 @@
 		width: 100%;
 		padding-bottom: 30px;
 		text-align: center;
+		position: relative;
 		margin: 30px -1px 0 0;
 			@include media-breakpoint-up(md) {
 				width: 33.33%;
@@ -95,6 +96,43 @@
 	.tm_pb_tm_price {
 		color: #999;
 		font-size: 16px;
+	}
+
+	.tm_pb_sticker_inner {
+		position: relative;
+			.tm-pb-icon {
+				line-height: 0;
+			}
+	}
+
+	.tm_pb_pricing_sticker {
+		position: absolute;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 90px;
+		height: 90px;
+		padding: 20px;
+		margin-top: -45px;
+		border-radius: 50%;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: 50%;
+		&.sticker-top-right {
+			top: 0;
+			right: 0;
+		}
+
+		&.sticker-top-center {
+			top: 0;
+			left: 50%;
+			margin-left: -45px;
+		}
+
+		&.sticker-top-left {
+			top: 0;
+			left: 0;
+		}
 	}
 
 	.tm_pb_dollar_sign {
