@@ -18,7 +18,7 @@ function tm_pb_media_breakpoints() {
 function tm_pb_media_breakpoint_values() {
 	return apply_filters( 'tm_pb_media_breakpoint_values', array(
 		'phone'   => 'max_width_767',
-		'tablet'  => '768_980',
+		'tablet'  => '768_991',
 		'laptop'  => '992_1440',
 		'desktop' => 'min_width_1441',
 	) );
@@ -1392,6 +1392,7 @@ function _tm_pb_sanitize_code_module_content_regex( $matches ) {
 }
 
 function tm_pb_builder_post_content_capability_check( $content) {
+
 	if ( ! current_user_can( 'unfiltered_html' ) ) {
 		$content = preg_replace_callback('/\[tm_pb_code .*\](.*)\[\/tm-pb_code\]/mis', '_tm_pb_sanitize_code_module_content_regex', $content );
 		$content = preg_replace_callback('/\[tm_pb_fullwidth_code .*\](.*)\[\/tm-pb_fullwidth_code\]/mis', '_tm_pb_sanitize_code_module_content_regex', $content );
@@ -4935,12 +4936,12 @@ function tm_pb_generate_responsive_css( $values_array, $css_selector, $css_prope
 
 			if ( 'desktop' !== $device ) {
 				switch ( $device ) {
-					case 'tablet':
-						$current_media_query = 'max_width_991';
-						break;
-
 					case 'laptop':
 						$current_media_query = '992_1440';
+						break;
+
+					case 'tablet':
+						$current_media_query = 'max_width_991';
 						break;
 
 					default:
@@ -4950,6 +4951,7 @@ function tm_pb_generate_responsive_css( $values_array, $css_selector, $css_prope
 
 				$style['media_query'] = TM_Builder_Element::get_media_query( $current_media_query );
 			}
+
 			TM_Builder_Element::set_style( $function_name, $style );
 		}
 	}
@@ -5232,3 +5234,4 @@ function get_map_style_json( $map_style ){
 
 	return '';
 }
+
