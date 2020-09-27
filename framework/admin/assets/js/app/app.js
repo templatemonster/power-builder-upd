@@ -2592,30 +2592,40 @@
 
 		// set the correct content for Yoast SEO plugin if it's activated
 		if ( tm_pb_is_yoast_seo_active() ) {
-			var TM_PB_Yoast_Content = function() {
-				YoastSEO.app.registerPlugin( 'TM_PB_Yoast_Content', { status: 'ready' } );
+			jQuery( window ).on(
+				"YoastSEO:ready",
+				function() {
+					var TM_PB_Yoast_Content = function() {
+							// Ensure YoastSEO.js is present and can access the necessary features.
+							if ( typeof YoastSEO === "undefined" || typeof YoastSEO.analysis === "undefined" || typeof YoastSEO.analysis.worker === "undefined" ) {
+								return;
+							}
 
-				/**
-				 * @param modification    {string}    The name of the filter
-				 * @param callable        {function}  The callable
-				 * @param pluginName      {string}    The plugin that is registering the modification.
-				 * @param priority        {number}    (optional) Used to specify the order in which the callables
-				 *                                    associated with a particular filter are called. Lower numbers
-				 *                                    correspond with earlier execution.
-				 */
-				YoastSEO.app.registerModification( 'content', this.tm_pb_update_content, 'TM_PB_Yoast_Content', 5 );
-			}
+						YoastSEO.app.registerPlugin( 'TM_PB_Yoast_Content', { status: 'ready' } );
 
-			/**
-			 * Return the content processed by do_shortcode()
-			 */
-			TM_PB_Yoast_Content.prototype.tm_pb_update_content = function( data ) {
-				var final_content = tm_pb_processed_yoast_content || tm_pb_options.yoast_content;
+						/**
+						 * @param modification    {string}    The name of the filter
+						 * @param callable        {function}  The callable
+						 * @param pluginName      {string}    The plugin that is registering the modification.
+						 * @param priority        {number}    (optional) Used to specify the order in which the callables
+						 *                                    associated with a particular filter are called. Lower numbers
+						 *                                    correspond with earlier execution.
+						 */
+						YoastSEO.app.registerModification( 'content', this.tm_pb_update_content, 'TM_PB_Yoast_Content', 5 );
+					}
 
-				return final_content;
-			};
+					/**
+					 * Return the content processed by do_shortcode()
+					 */
+					TM_PB_Yoast_Content.prototype.tm_pb_update_content = function( data ) {
+						var final_content = tm_pb_processed_yoast_content || tm_pb_options.yoast_content;
 
-			new TM_PB_Yoast_Content();
+						return final_content;
+					};
+
+					new TM_PB_Yoast_Content();
+				}
+			);
 		}
 
 		TM_PageBuilder.Events.on('tm-advanced-module-settings:render', adv_setting_form_category_select_update_hidden );
